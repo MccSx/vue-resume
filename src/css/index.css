@@ -40,8 +40,11 @@ div[v-cloak] { display: none; }
 
 
 .resume { max-width: 800px; margin: 0 auto; }
-.resume > section { margin: 50px 0; }
-.resume > section > h1 { text-align: center; margin: 20px; }
+.resume > section { margin: 50px 0;}
+.resume > section > h1 { text-align: center; margin: 20px;}
+.editableSpan {position: relative;}
+.editableSpan button{display: none; position: absolute; top: 0; left: 100%; width: 3em; z-index: 1;}
+.editableSpan:hover button{display: block;}
 .resume > section > h2 { text-align: center; margin: 20px; }
 .resume .profile { text-align: center; }
 .resume .skills > ul { display: flex; flex-wrap: wrap;
@@ -52,8 +55,6 @@ div[v-cloak] { display: none; }
     padding: 10px;
     margin-top: 10px;
 }
-.resume .projects { }
-.resume .projects > ol { }
 .resume .projects > ol > li { margin: 30px 0; border: 1px solid #ddd;
     padding: 10px; }
 .resume .projects header { display: flex; align-items: center;

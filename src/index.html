@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
-  <div class="page">
+  <div class="page" id="app">
     <aside>
       <div class="upper">
         <ul class="actions">
@@ -31,8 +31,21 @@
     <main>
       <div class="resume">
         <section>
-          <h2 contenteditable="true">姓名</h2>
-          <p>出生年月 | 应聘职位 | 性别 | 邮箱 | 手机</p>
+          <h1>
+            <editable-span :value="resume.name" v-on:edit="edit('name', $event)"></editable-span>
+          </h1>
+          <p>
+            应聘职位：<editable-span :value="resume.jobTitle" v-on:edit="edit('jobTitle', $event)"></editable-span>
+          </p>
+          <p>
+            <editable-span :value="resume.birthday" v-on:edit="edit('birthday', $event)"></editable-span>
+            |
+            <editable-span :value="resume.gender" v-on:edit="edit('gender', $event)"></editable-span>
+            |
+            <editable-span :value="resume.email" v-on:edit="edit('email', $event)"></editable-span>
+            |
+            <editable-span :value="resume.phone" v-on:edit="edit('phone', $event)"></editable-span>
+          </p>
         </section>
         <section>
           <h2>技能</h2>
@@ -119,9 +132,10 @@
       </div>
     </main>
   </div>
-
-
   <!-- <script src="../vendor/av-min.js"></script> -->
-  <script src="./js/av.js"></script>
+  <!-- <script src="./js/av.js"></script> -->
+  <script src="../vendor/vue.min.js"></script>
+  <script src="./js/editable-span.js"></script>
+  <script src="./js/app.js"></script>
 </body>
 </html>
