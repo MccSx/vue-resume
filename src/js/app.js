@@ -10,6 +10,14 @@ let vm = new Vue({
       email: 'xxx@163.com',
       gender: '男',
       phone: '12312341234'
+    },
+    signUp: {
+      email: '',
+      password: ''
+    },
+    login: {
+      email: '',
+      password:''
     }
   },
   methods: {
@@ -19,11 +27,40 @@ let vm = new Vue({
     onClickSave() {
       let currentUser = AV.User.current();
       if (currentUser) {
-         // 跳转到首页
+        this.saveResume()
       }
       else {
         this.loginVisible = true
       }
+    },
+    saveResume() {
+      let {id} = AV.User.current()
+      let user = AV.Object.createWithoutData('User', id)
+      user.set('resume', this.resume)
+      user.save()
+    },
+    onSignUp(e){
+      let user = new AV.User()
+      // 设置用户名
+      user.setUsername(this.signUp.email)
+      // 设置密码
+      user.setPassword(this.signUp.password)
+      user.setEmail(this.signUp.email)
+      user.signUp().then(function (user) {
+          console.log(user)
+      }, function (error) {
+      })
+    },
+    onLogin(e){
+      AV.User.logIn(this.login.email, this.login.password).then(function (user) {
+        console.log(user);
+      }, function (error) {
+        if (error.code === 211) {
+          alert('邮箱不存在')
+        } else if (error.code === 210) {
+          alert('邮箱和密码不匹配')
+        }
+      })
     }
   }
 })
