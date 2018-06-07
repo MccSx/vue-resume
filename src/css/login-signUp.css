@@ -1,0 +1,3 @@
+.login,.signUp{position: fixed; min-width: 300px; background: #ddd; min-height: 400px; left: 50%; top: 50%; transform: translate(-50%, -50%); 
+  display: flex; justify-content: center;}
+.login > form,.signUp > form{width: 100%;}

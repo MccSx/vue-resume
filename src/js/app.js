@@ -1,6 +1,8 @@
-var vm = new Vue({
+let vm = new Vue({
   el: '#app',
   data: {
+    loginVisible: false,
+    signUpVisible: false,
     resume: {
       name: '姓名',
       jobTitle: '前端工程师',
@@ -13,6 +15,15 @@ var vm = new Vue({
   methods: {
     edit(key, value) {
       this.resume[key] = value
+    },
+    onClickSave() {
+      let currentUser = AV.User.current();
+      if (currentUser) {
+         // 跳转到首页
+      }
+      else {
+        this.loginVisible = true
+      }
     }
   }
 })
