@@ -18,7 +18,8 @@ let vm = new Vue({
     login: {
       email: '',
       password:''
-    }
+    },
+    currentUser: {id: '', email: ''}
   },
   methods: {
     edit(key, value) {
@@ -46,15 +47,18 @@ let vm = new Vue({
       // 设置密码
       user.setPassword(this.signUp.password)
       user.setEmail(this.signUp.email)
-      user.signUp().then(function (user) {
+      user.signUp().then((user) => {
           console.log(user)
-      }, function (error) {
+      }, (error) => {
       })
     },
     onLogin(e){
-      AV.User.logIn(this.login.email, this.login.password).then(function (user) {
-        console.log(user);
-      }, function (error) {
+      AV.User.logIn(this.login.email, this.login.password).then((user) => {
+        this.currentUser = {
+          id: user.id,
+          email: user.attributes.email
+        }
+      }, (error) => {
         if (error.code === 211) {
           alert('邮箱不存在')
         } else if (error.code === 210) {
@@ -69,3 +73,10 @@ let vm = new Vue({
     }
   }
 })
+
+let currentUser = AV.User.current()
+if (currentUser) {
+  console.log(currentUser)
+  console.log(JSON.stringify(currentUser))
+  vm.currentUser = currentUser
+}
