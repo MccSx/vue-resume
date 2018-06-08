@@ -61,6 +61,11 @@ let vm = new Vue({
           alert('邮箱和密码不匹配')
         }
       })
+    },
+    onLogout() {
+      AV.User.logOut()
+      window.location.reload()
+      alert('注销成功')
     }
   }
 })
