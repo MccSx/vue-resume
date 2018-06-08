@@ -19,11 +19,14 @@ let vm = new Vue({
       email: '',
       password:''
     },
-    currentUser: {id: '', email: ''}
+    currentUser: {objectId: '', email: ''}
   },
   methods: {
     edit(key, value) {
       this.resume[key] = value
+    },
+    isLogIn() {
+      return !!this.currentUser.objectId
     },
     onClickSave() {
       let currentUser = AV.User.current();
@@ -38,7 +41,11 @@ let vm = new Vue({
       let {id} = AV.User.current()
       let user = AV.Object.createWithoutData('User', id)
       user.set('resume', this.resume)
-      user.save()
+      user.save().then(() => {
+        alert('保存成功')
+      }, () => {
+        alert('保存失败')
+      })
     },
     onSignUp(e){
       let user = new AV.User()
@@ -48,16 +55,19 @@ let vm = new Vue({
       user.setPassword(this.signUp.password)
       user.setEmail(this.signUp.email)
       user.signUp().then((user) => {
-          console.log(user)
+        alert('注册成功')
+        user = user.toJSON()
+        this.currentUser = user
+        this.signUpVisible = false
       }, (error) => {
+        alert(error.rawMessage)
       })
     },
     onLogin(e){
       AV.User.logIn(this.login.email, this.login.password).then((user) => {
-        this.currentUser = {
-          id: user.id,
-          email: user.attributes.email
-        }
+        user = user.toJSON()
+        this.currentUser = user
+        this.loginVisible = false
       }, (error) => {
         if (error.code === 211) {
           alert('邮箱不存在')
@@ -70,13 +80,20 @@ let vm = new Vue({
       AV.User.logOut()
       window.location.reload()
       alert('注销成功')
+    },
+    getResume() {
+      var query = new AV.Query('User')
+      query.get(this.currentUser.objectId).then((user) => {
+        this.resume = user.toJSON().resume
+      }, (error) => {
+        console.log(error)
+      })
     }
   }
 })
 
 let currentUser = AV.User.current()
 if (currentUser) {
-  console.log(currentUser)
-  console.log(JSON.stringify(currentUser))
-  vm.currentUser = currentUser
+  vm.currentUser = currentUser.toJSON()
+  vm.getResume()
 }
