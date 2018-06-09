@@ -31,7 +31,7 @@
     </aside>
     <main>
       <div class="resume">
-        <section>
+        <section class="profile">
           {{currentUser}}
           <h1>
             <editable-span :value="resume.name" v-on:edit="edit('name', $event)"></editable-span>
@@ -49,36 +49,18 @@
             <editable-span :value="resume.phone" v-on:edit="edit('phone', $event)"></editable-span>
           </p>
         </section>
-        <section>
+        <section class="skills">
           <h2>技能</h2>
           <ul>
-            <li>
-              <span class="name">静态页面制作</span>
+            <li v-for="(skill, index) in resume.skills">
+              <editable-span :value="skill.name" v-on:edit="edit(`skills[${index}].name`, $event)"></editable-span>
               <div class="description">
-                完美实现1:1设计稿
-              </div>
-            </li>
-            <li>
-              <span class="name">静态页面制作</span>
-              <div class="description">
-                完美实现1:1设计稿
-              </div>
-            </li>
-            <li>
-              <span class="name">静态页面制作</span>
-              <div class="description">
-                完美实现1:1设计稿
-              </div>
-            </li>
-            <li>
-              <span class="name">静态页面制作</span>
-              <div class="description">
-                完美实现1:1设计稿
+                <editable-span :value="skill.description" v-on:edit="edit(`skills[${index}].description`, $event)"></editable-span>
               </div>
             </li>
           </ul>
         </section>
-        <section>
+        <section class="projects">
           <h2>项目经历</h2>
           <ol>
             <li>

@@ -9,7 +9,13 @@ let vm = new Vue({
       birthday: '1990.1.1',
       email: 'xxx@163.com',
       gender: '男',
-      phone: '12312341234'
+      phone: '12312341234',
+      skills: [
+        {name: '静态页面制作', description: '完美实现1:1设计稿'},
+        {name: '静态页面制作', description: '完美实现1:1设计稿'},
+        {name: '静态页面制作', description: '完美实现1:1设计稿'},
+        {name: '静态页面制作', description: '完美实现1:1设计稿'}
+      ]
     },
     signUp: {
       email: '',
@@ -84,7 +90,7 @@ let vm = new Vue({
     getResume() {
       var query = new AV.Query('User')
       query.get(this.currentUser.objectId).then((user) => {
-        this.resume = user.toJSON().resume
+        Object.assign(this.resume, user.toJSON().resume)
       }, (error) => {
         console.log(error)
       })
