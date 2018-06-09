@@ -15,6 +15,10 @@ let vm = new Vue({
         {name: '静态页面制作', description: '完美实现1:1设计稿'},
         {name: '静态页面制作', description: '完美实现1:1设计稿'},
         {name: '静态页面制作', description: '完美实现1:1设计稿'}
+      ],
+      projects: [
+        {name: '请填写项目名称', link: 'http://...', keywords: '请填写关键词', description: '请详细描述'},
+        {name: '请填写项目名称', link: 'http://...', keywords: '请填写关键词', description: '请详细描述'}
       ]
     },
     signUp: {
@@ -116,6 +120,12 @@ let vm = new Vue({
     },
     removeSkill(index) {
       this.resume.skills.splice(index, 1)
+    },
+    addProject() {
+      this.resume.projects.push({name: '请填写项目名称', link: 'http://...', keywords: '请填写关键词', description: '请详细描述'})
+    },
+    removeProject(index) {
+      this.resume.projects.splice(index, 1)
     }
   }
 })
