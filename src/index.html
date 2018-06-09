@@ -32,7 +32,7 @@
     <main>
       <div class="resume">
         <section class="profile">
-          {{currentUser}}
+          {{resume}}
           <h1>
             <editable-span :value="resume.name" v-on:edit="edit('name', $event)"></editable-span>
           </h1>
@@ -57,6 +57,10 @@
               <div class="description">
                 <editable-span :value="skill.description" v-on:edit="edit(`skills[${index}].description`, $event)"></editable-span>
               </div>
+              <button v-if="index>=4" @click="removeSkill(index)">X</button>
+            </li>
+            <li>
+              <button @click="addSkill">添加</button>
             </li>
           </ul>
         </section>

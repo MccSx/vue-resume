@@ -29,7 +29,23 @@ let vm = new Vue({
   },
   methods: {
     edit(key, value) {
-      this.resume[key] = value
+      let reg = /\[(\d+)\]/g
+      key = key.replace(reg, (match, number) => {return `.${number}`})
+      let keys = key.split('.')
+      // keys = ['skills', '0', 'name']
+      let result = this.resume
+      for (let i = 0; i < keys.length; i++) {
+        if (i === keys.length - 1) {
+          result[keys[i]] = value
+          // this.resume['skills']['0']['name'] = value
+        } else {
+          result = result[keys[i]]        
+        }
+        // i=0 result = result['skills']
+        // i=1 result = result['0']
+        // i=2 result = result['name']
+        // result = result['skills']['0']['name']
+      }
     },
     isLogIn() {
       return !!this.currentUser.objectId
@@ -94,6 +110,12 @@ let vm = new Vue({
       }, (error) => {
         console.log(error)
       })
+    },
+    addSkill() {
+      this.resume.skills.push({name: '请添加技能名称', description: '请添加技能描述'})
+    },
+    removeSkill(index) {
+      this.resume.skills.splice(index, 1)
     }
   }
 })
