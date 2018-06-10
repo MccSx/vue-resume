@@ -3,6 +3,7 @@ let vm = new Vue({
   data: {
     loginVisible: false,
     signUpVisible: false,
+    shareVisible: false,
     resume: {
       name: '姓名',
       jobTitle: '前端工程师',
@@ -29,7 +30,8 @@ let vm = new Vue({
       email: '',
       password:''
     },
-    currentUser: {objectId: '', email: ''}
+    currentUser: {objectId: '', email: ''},
+    shareUrl: ''
   },
   methods: {
     edit(key, value) {
@@ -133,5 +135,6 @@ let vm = new Vue({
 let currentUser = AV.User.current()
 if (currentUser) {
   vm.currentUser = currentUser.toJSON()
+  vm.shareUrl = location.origin + location.pathname + '?user_id=' + vm.currentUser.objectId
   vm.getResume()
 }
