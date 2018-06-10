@@ -31,7 +31,24 @@ let vm = new Vue({
       password:''
     },
     currentUser: {objectId: '', email: ''},
-    shareUrl: ''
+    shareUrl: '',
+    previewUser: {objectId: '', email: ''},
+    previewResume: {},
+    mode: 'edit'
+  },
+  computed: {
+    displayResume: function () {
+      return this.mode === 'preview' ? this.previewResume : this.resume
+    }
+  },
+  watch: {
+    'currentUser.objectId': function (newValue, oldValue) {
+      if (newValue) {
+        this.getResume(this.currentUser).then((resume) => {
+          this.resume = resume
+        })
+      }
+    }
   },
   methods: {
     edit(key, value) {
@@ -82,6 +99,7 @@ let vm = new Vue({
       // 设置密码
       user.setPassword(this.signUp.password)
       user.setEmail(this.signUp.email)
+      user.set('resume', this.resume)
       user.signUp().then((user) => {
         alert('注册成功')
         user = user.toJSON()
@@ -109,10 +127,10 @@ let vm = new Vue({
       window.location.reload()
       alert('注销成功')
     },
-    getResume() {
+    getResume(user) {
       var query = new AV.Query('User')
-      query.get(this.currentUser.objectId).then((user) => {
-        Object.assign(this.resume, user.toJSON().resume)
+      return query.get(user.objectId).then((user) => {
+        return user.toJSON().resume
       }, (error) => {
         console.log(error)
       })
@@ -132,9 +150,25 @@ let vm = new Vue({
   }
 })
 
+//获取当前用户
 let currentUser = AV.User.current()
 if (currentUser) {
   vm.currentUser = currentUser.toJSON()
   vm.shareUrl = location.origin + location.pathname + '?user_id=' + vm.currentUser.objectId
-  vm.getResume()
+  vm.getResume(vm.currentUser).then((resume) => {
+    vm.resume = resume
+  })
+}
+
+//获取预览用户
+let search = location.search
+let reg = /user_id=([^&]+)/
+let matches = search.match(reg)
+let userId
+if (matches) {
+  userId = matches[1]
+  vm.mode = 'preview'
+  vm.getResume({objectId: userId}).then((resume) => {
+    vm.previewResume = resume
+  })
 }

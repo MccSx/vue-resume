@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="page" id="app">
-    <aside>
+    <aside v-show="mode === 'edit'">
       <div class="upper">
         <ul class="actions">
           <li>
@@ -31,36 +31,37 @@
       </div>
     </aside>
     <main>
-      <div class="resume">
+      <div class="resumeContent">
+        <button class="button" @click="mode = 'edit'">当前用户</button>
+        <button class="button" @click="mode = 'preview'">预览用户</button>
         <section class="profile">
-          {{resume}}
           <h1>
-            <editable-span :value="resume.name" v-on:edit="edit('name', $event)"></editable-span>
+            <editable-span :disabled="mode === 'edit'" :value="displayResume.name" v-on:edit="edit('name', $event)"></editable-span>
           </h1>
           <p>
-            应聘职位：<editable-span :value="resume.jobTitle" v-on:edit="edit('jobTitle', $event)"></editable-span>
+            应聘职位：<editable-span :disabled="mode === 'edit'" :value="displayResume.jobTitle" v-on:edit="edit('jobTitle', $event)"></editable-span>
           </p>
           <p>
-            <editable-span :value="resume.birthday" v-on:edit="edit('birthday', $event)"></editable-span>
+            <editable-span :disabled="mode === 'edit'" :value="displayResume.birthday" v-on:edit="edit('birthday', $event)"></editable-span>
             |
-            <editable-span :value="resume.gender" v-on:edit="edit('gender', $event)"></editable-span>
+            <editable-span :disabled="mode === 'edit'" :value="displayResume.gender" v-on:edit="edit('gender', $event)"></editable-span>
             |
-            <editable-span :value="resume.email" v-on:edit="edit('email', $event)"></editable-span>
+            <editable-span :disabled="mode === 'edit'" :value="displayResume.email" v-on:edit="edit('email', $event)"></editable-span>
             |
-            <editable-span :value="resume.phone" v-on:edit="edit('phone', $event)"></editable-span>
+            <editable-span :disabled="mode === 'edit'" :value="displayResume.phone" v-on:edit="edit('phone', $event)"></editable-span>
           </p>
         </section>
         <section class="skills">
           <h2>技能</h2>
           <ul>
-            <li v-for="(skill, index) in resume.skills">
-              <editable-span :value="skill.name" v-on:edit="edit(`skills[${index}].name`, $event)"></editable-span>
+            <li v-for="(skill, index) in displayResume.skills">
+              <editable-span :disabled="mode === 'edit'" :value="skill.name" v-on:edit="edit(`skills[${index}].name`, $event)"></editable-span>
               <div class="description">
-                <editable-span :value="skill.description" v-on:edit="edit(`skills[${index}].description`, $event)"></editable-span>
+                <editable-span :disabled="mode === 'edit'" :value="skill.description" v-on:edit="edit(`skills[${index}].description`, $event)"></editable-span>
               </div>
               <button v-if="index>=4" @click="removeSkill(index)">X</button>
             </li>
-            <li>
+            <li v-show="mode === 'edit'">
               <button @click="addSkill">添加</button>
             </li>
           </ul>
@@ -68,28 +69,28 @@
         <section class="projects">
           <h2>项目经历</h2>
           <ol>
-            <li v-for="(project, index) in resume.projects">
+            <li v-for="(project, index) in displayResume.projects">
               <header>
                 <div class="start">
                   <h3 class="name">
-                    <editable-span :value="project.name" v-on:edit="edit(`projects[${index}].name`, $event)"></editable-span>
+                    <editable-span :disabled="mode === 'edit'" :value="project.name" v-on:edit="edit(`projects[${index}].name`, $event)"></editable-span>
                   </h3>
                   <span class="link">
-                    <editable-span :value="project.link" v-on:edit="edit(`projects[${index}].link`, $event)"></editable-span>
+                    <editable-span :disabled="mode === 'edit'" :value="project.link" v-on:edit="edit(`projects[${index}].link`, $event)"></editable-span>
                   </span>
                 </div>
                 <div class="end">
                   <span class="keywords">
-                    <editable-span :value="project.keywords" v-on:edit="edit(`projects[${index}].keywords`, $event)"></editable-span>
+                    <editable-span :disabled="mode === 'edit'" :value="project.keywords" v-on:edit="edit(`projects[${index}].keywords`, $event)"></editable-span>
                   </span>
                 </div>
               </header>
               <p class="description">
-                <editable-span :value="project.description" v-on:edit="edit(`projects[${index}].description`, $event)"></editable-span>
+                <editable-span :disabled="mode === 'edit'" :value="project.description" v-on:edit="edit(`projects[${index}].description`, $event)"></editable-span>
               </p>
               <button v-if="index>=2" @click="removeProject">X</button>
             </li>
-            <li>
+            <li v-show="mode === 'edit'">
               <button @click="addProject">添加</button>
             </li>
           </ol>
