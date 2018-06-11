@@ -65,3 +65,5 @@ div[v-cloak] { display: none; }
     margin-right: 1em;
 }
 .resumeContent .projects header .start { display: flex; }
+
+main.dark{background: cadetblue; color: white;}

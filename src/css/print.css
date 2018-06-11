@@ -1,0 +1,6 @@
+.page aside{display: none;}
+.page{padding: 20px;}
+.skills .remove,
+.skills .add,
+.projects .remove,
+.projects .add{display: none;}

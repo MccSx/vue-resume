@@ -4,6 +4,7 @@ let vm = new Vue({
     loginVisible: false,
     signUpVisible: false,
     shareVisible: false,
+    skinPikerVisible: false,
     resume: {
       name: '姓名',
       jobTitle: '前端工程师',
@@ -34,7 +35,8 @@ let vm = new Vue({
     shareUrl: '',
     previewUser: {objectId: '', email: ''},
     previewResume: {},
-    mode: 'edit'
+    mode: 'edit',
+    skinClass: 'default'
   },
   computed: {
     displayResume: function () {
@@ -146,6 +148,12 @@ let vm = new Vue({
     },
     removeProject(index) {
       this.resume.projects.splice(index, 1)
+    },
+    print() {
+      window.print()
+    },
+    changeSkin(name) {
+      this.skinClass = name
     }
   }
 })
