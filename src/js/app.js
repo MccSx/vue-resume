@@ -23,14 +23,6 @@ let vm = new Vue({
         {name: '请填写项目名称', link: 'http://...', keywords: '请填写关键词', description: '请详细描述'}
       ]
     },
-    signUp: {
-      email: '',
-      password: ''
-    },
-    login: {
-      email: '',
-      password:''
-    },
     currentUser: {objectId: '', email: ''},
     shareUrl: '',
     previewUser: {objectId: '', email: ''},
@@ -94,35 +86,13 @@ let vm = new Vue({
         alert('保存失败')
       })
     },
-    onSignUp(e){
-      let user = new AV.User()
-      // 设置用户名
-      user.setUsername(this.signUp.email)
-      // 设置密码
-      user.setPassword(this.signUp.password)
-      user.setEmail(this.signUp.email)
-      user.set('resume', this.resume)
-      user.signUp().then((user) => {
-        alert('注册成功')
-        user = user.toJSON()
-        this.currentUser = user
-        this.signUpVisible = false
-      }, (error) => {
-        alert(error.rawMessage)
-      })
+    onLogin(user) {
+      this.currentUser = user
+      this.loginVisible = false
     },
-    onLogin(e){
-      AV.User.logIn(this.login.email, this.login.password).then((user) => {
-        user = user.toJSON()
-        this.currentUser = user
-        this.loginVisible = false
-      }, (error) => {
-        if (error.code === 211) {
-          alert('邮箱不存在')
-        } else if (error.code === 210) {
-          alert('邮箱和密码不匹配')
-        }
-      })
+    onSignUp() {
+      this.currentUser = user
+      this.signUpVisible = false
     },
     onLogout() {
       AV.User.logOut()
@@ -152,8 +122,12 @@ let vm = new Vue({
     print() {
       window.print()
     },
-    changeSkin(name) {
-      this.skinClass = name
+    onShare() {
+      if (this.currentUser.objectId) {
+        this.shareVisible = true
+      } else {
+        alert('请先登录')
+      }
     }
   }
 })

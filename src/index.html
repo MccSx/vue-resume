@@ -17,7 +17,7 @@
             <button class="button" @click="onClickSave">保存</button>
           </li>
           <li>
-            <button class="button" @click="shareVisible = true">分享</button>
+            <button class="button" @click="onShare">分享</button>
           </li>
           <li>
             <button class="button" @click="print">打印</button>
@@ -98,55 +98,27 @@
         </section>
       </div>
     </main>
-    <div v-show="loginVisible" class="login" v-cloak>
-      <form class="form" @submit.prevent="onLogin">
-        <h2>登录</h2>
-        <button type="button" @click="loginVisible = false">关闭</button>
-        <div class="row">
-          <label>邮箱</label>
-          <input type="text" v-model="login.email">
-        </div>
-        <div class="row">
-          <label>密码</label>
-          <input type="password" v-model="login.password">
-        </div>
-        <div class="actions">
-          <button type="submit">提交</button>
-          <a href="#" @click="signUpVisible = true; loginVisible = false">注册</a>
-        </div>
-      </form>
-    </div>
-    <div v-show="signUpVisible" class="signUp" v-cloak>
-      <form class="form" @submit.prevent="onSignUp">
-        <h2>注册</h2>
-        <button type="button" @click="signUpVisible = false">关闭</button>
-        <div class="row">
-          <label>邮箱</label>
-          <input type="text" v-model="signUp.email">
-        </div>
-        <div class="row">
-          <label>密码</label>
-          <input type="password" v-model="signUp.password">
-        </div>
-        <div class="actions">
-          <button type="submit">提交</button>
-          <a href="#" @click="loginVisible = true; signUpVisible = false">登录</a>
-        </div>
-      </form>
-    </div>
-    <div v-show="shareVisible" class="share" v-cloak>
-      <h2>你可以把链接分享给面试官</h2>
-      <textarea readonly>{{shareUrl}}</textarea>
-    </div>
-    <div v-show="skinPikerVisible" class="skinPiker">
-      <button class="default" @click="changeSkin('default')">默认</button>
-      <button class="dark" @click="changeSkin('dark')">暗黑</button>
-    </div>
+    <login v-show="loginVisible" 
+      @removelogin="loginVisible = false"
+      @clicksignup="signUpVisible = true; loginVisible = false"
+      @tologin="onLogin"
+    ></login>
+    <sign-up v-show="signUpVisible"
+      @removesignup="signUpVisible = false"
+      @clicksignup="loginVisible = true; signUpVisible = false"
+      @tosignup="onSignUp"
+    ></sign-up>
+    <share :share-link="shareUrl" v-show="shareVisible"></share>
+    <skin-piker v-show="skinPikerVisible"></skin-piker>
   </div>
   <script src="../vendor/av-min.js"></script>
   <script src="./js/av.js"></script>
   <script src="../vendor/vue.min.js"></script>
   <script src="./js/editable-span.js"></script>
   <script src="./js/app.js"></script>
+  <script src="./js/login.js"></script>
+  <script src="./js/signUp.js"></script>
+  <script src="./js/share.js"></script>
+  <script src="./js/skinPiker.js"></script>
 </body>
 </html>
