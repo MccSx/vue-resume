@@ -1,4 +1,4 @@
-Vue.component('sign-up', {
+window.SignUp = {
   data() {
     return {
       signUp: {
@@ -50,9 +50,11 @@ Vue.component('sign-up', {
         </div>
         <div class="actions">
           <button type="submit">提交</button>
-          <a href="#" @click="onClickSignUp">登录</a>
+          <router-link to="/login">登录</router-link>
         </div>
       </form>
     </div>
   `
-})
+}
+
+Vue.component('sign-up', SignUp)

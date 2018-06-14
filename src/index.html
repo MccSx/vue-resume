@@ -10,7 +10,8 @@
 </head>
 <body>
   <div class="page" id="app">
-    <page-aside v-show="mode === 'edit'" :logout-visible="isLogIn()"
+    <router-view></router-view>
+    <!-- <page-aside v-show="mode === 'edit'" :logout-visible="isLogIn()"
     @save="onClickSave"
     @share="onShare"
     @print="print"
@@ -19,8 +20,8 @@
     ></page-aside>
     <main :class="skinClass">
       <resume :mode="mode" :display-resume="displayResume"></resume>
-    </main>
-    <login v-show="loginVisible" 
+    </main> -->
+    <!-- <login v-show="loginVisible" 
       @removelogin="loginVisible = false"
       @clicksignup="signUpVisible = true; loginVisible = false"
       @tologin="onLogin"
@@ -31,18 +32,21 @@
       @tosignup="onSignUp"
     ></sign-up>
     <share :share-link="shareUrl" v-show="shareVisible"></share>
-    <skin-piker v-show="skinPikerVisible"></skin-piker>
+    <skin-piker v-show="skinPikerVisible"></skin-piker> -->
   </div>
   <script src="../vendor/av-min.js"></script>
   <script src="./js/av.js"></script>
   <script src="../vendor/vue.min.js"></script>
+  <script src="../vendor/vue-router.min.js"></script>
   <script src="./js/editable-span.js"></script>
-  <script src="./js/app.js"></script>
   <script src="./js/login.js"></script>
   <script src="./js/signUp.js"></script>
   <script src="./js/share.js"></script>
   <script src="./js/skinPiker.js"></script>
   <script src="./js/resume.js"></script>
   <script src="./js/page-aside.js"></script>
+  <script src="./js/page-main.js"></script>
+  <script src="./js/router.js"></script>
+  <!-- <script src="./js/app.js"></script> -->
 </body>
 </html>
